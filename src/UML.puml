@@ -1,0 +1,96 @@
+@startuml
+class Pasajero {
+    -nombre: String
+    -apellido: String
+    -cedula: String
+    +Pasajero(nombre: String, apellido: String, cedula: String)
+    +getNombre(): String
+    +getApellido(): String
+    +getCedula(): String
+    +setNombre(nombre: String): void
+    +setApellido(apellido: String): void
+    +setCedula(cedula: String): void
+    +imprimirDatos(): void
+}
+
+class Ruta {
+    -origen: String
+    -destino: String
+    -costoNormal: double
+    +Ruta(origen: String, destino: String, costoNormal: double)
+    +getOrigen(): String
+    +getDestino(): String
+    +getCostoNormal(): double
+    +setOrigen(origen: String): void
+    +setDestino(destino: String): void
+    +setCostoNormal(costoNormal: double): void
+    +imprimirDatos(): void
+}
+
+class Servicio {
+    #nombreServicio: String
+    +Servicio(nombreServicio: String)
+    +getNombreServicio(): String
+    +setNombreServicio(nombreServicio: String): void
+    +imprimirDatos(): void
+}
+
+class ServicioPremium extends Servicio {
+    -caracteristicaAdicional1: String
+    -caracteristicaAdicional2: String
+    +ServicioPremium(nombreServicio: String, caracteristicaAdicional1: String, caracteristicaAdicional2: String)
+    +ServicioPremium(caracteristicaAdicional1: String, caracteristicaAdicional2: String)
+    +getCaracteristicaAdicional1(): String
+    +getCaracteristicaAdicional2(): String
+    +setCaracteristicaAdicional1(caracteristicaAdicional1: String): void
+    +setCaracteristicaAdicional2(caracteristicaAdicional2: String): void
+    +imprimirDatos(): void
+}
+
+abstract class Ticket {
+    #ruta: Ruta
+    #asiento: String
+    #pasajero: Pasajero
+    #tieneMaletaAdicional: boolean
+    +Ticket()
+    +Ticket(ruta: Ruta, asiento: String, pasajero: Pasajero, tieneMaletaAdicional: boolean)
+    +getRuta(): Ruta
+    +getAsiento(): String
+    +getPasajero(): Pasajero
+    +isTieneMaletaAdicional(): boolean
+    +setRuta(ruta: Ruta): void
+    +setAsiento(asiento: String): void
+    +setPasajero(pasajero: Pasajero): void
+    +setTieneMaletaAdicional(tieneMaletaAdicional: boolean): void
+    +{abstract} calcularCostoTotal(): double
+    +imprimirDatos(): void
+}
+
+class Normal extends Ticket {
+    - {static} COSTO_MALETA_ADICIONAL: double = 5.0
+    +Normal()
+    +Normal(ruta: Ruta, asiento: String, pasajero: Pasajero, tieneMaletaAdicional: boolean)
+    +calcularCostoTotal(): double
+    +imprimirDatos(): void
+}
+
+class VIP extends Ticket {
+    - {static} RECARGO_VIP: double = 0.30
+    - {static} COSTO_MALETA_ADICIONAL: double = 7.50
+    -servicioAdicional1: String
+    -servicioAdicional2: String
+    +VIP()
+    +VIP(ruta: Ruta, asiento: String, pasajero: Pasajero, tieneMaletaAdicional: boolean, servicioAdicional1: String, servicioAdicional2: String)
+    +getServicioAdicional1(): String
+    +getServicioAdicional2(): String
+    +setServicioAdicional1(servicioAdicional1: String): void
+    +setServicioAdicional2(servicioAdicional2: String): void
+    +calcularCostoTotal(): double
+    +imprimirDatos(): void
+}
+
+Ticket "1" *-- "1" Ruta : tiene
+Ticket "1" *-- "1" Pasajero : tiene
+
+
+@enduml
